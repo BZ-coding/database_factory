@@ -8,6 +8,8 @@
 git clone https://github.com/BZ-coding/database_factory utils/database_factory
 ```
 
+## 使用
+
 ```python
 from utils.database_factory import DatabaseFactory
 
