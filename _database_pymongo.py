@@ -1,6 +1,7 @@
 from pymongo import MongoClient, errors
 
 from ._DataBase import DataBase
+from ._factory import DataBaseFactory
 
 
 class DataBasePyMongo(DataBase):
@@ -36,3 +37,6 @@ class DataBasePyMongo(DataBase):
 
     def get_database(self):
         return self._databese
+
+
+DataBaseFactory.register(database_type='pymongo', database_class=DataBasePyMongo)

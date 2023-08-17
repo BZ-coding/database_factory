@@ -2,13 +2,14 @@ import sqlite3
 import pandas
 
 from ._DataBase import DataBase
+from ._factory import DataBaseFactory
 
 
 class DataBaseSqlite3(DataBase):
     def __init__(self, database_name, sheet_name):
         self.__databese = sqlite3.connect(database_name)
         self.__sheet_name = sheet_name
-        df_data_read = pandas.read_sql(sql="SELECT * FROM "+self.__sheet_name+" LIMIT 1", con=self.__databese)
+        df_data_read = pandas.read_sql(sql="SELECT * FROM " + self.__sheet_name + " LIMIT 1", con=self.__databese)
         self.__columns = df_data_read.columns
         self.__id = self.__columns[0]
 
@@ -17,18 +18,18 @@ class DataBaseSqlite3(DataBase):
             names = ""
             masks = ""
             for name in document.keys():
-                names += name+", "
+                names += name + ", "
                 masks += "?,"
             names = names[:-2]
             masks = masks[:-1]
 
-            values=[]
+            values = []
             for value in document.values():
                 values.append(value)
             values = tuple(values)
 
             cursor = self._databese.cursor()
-            cursor.execute("INSERT INTO "+self.__sheet_name+"("+names+") VALUES("+masks+")", values)
+            cursor.execute("INSERT INTO " + self.__sheet_name + "(" + names + ") VALUES(" + masks + ")", values)
             self.__databese.commit()
             return True
         except Exception as e:
@@ -66,3 +67,6 @@ class DataBaseSqlite3(DataBase):
     def delete(self, filter):
         print("WARNING: DataBaseSqlite3 delete does not complete.\n")
         pass
+
+
+DataBaseFactory.register(database_type='sqlite3', database_class=DataBaseSqlite3)

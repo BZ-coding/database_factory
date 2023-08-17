@@ -11,9 +11,9 @@ git clone https://github.com/BZ-coding/database_factory utils/database_factory
 ## 使用
 
 ```python
-from utils.database_factory import DatabaseFactory
+from database_factory import DataBaseFactory
 
-database_factory = DatabaseFactory(host='192.168.10.5', port=27017, model='pymongo')
-database = database_factory.get(database_name='rss', sheet_name='rss')
+database = DataBaseFactory.get(database_type='pymongo', database_name='rss', sheet_name='rss', host='192.168.10.5',
+                               port=27017)
 print(database)
 ```
